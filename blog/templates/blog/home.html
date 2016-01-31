@@ -5,11 +5,17 @@
 {% for object in object_list %}
   <div class="post">
     <h2><a href="{% url "entry_detail" slug=object.slug %}">{{ object.title }}</a></h2>
-    <p class="meta">
-      {{ object.created }} |
-      Tagged under {{  object.tags.all|join:", " }}
-    </p>
+    
+    <p class="post-meta">
+		{{ object.date_created }} tagged under {% for tag in object.tags.all %}<a class="post-category post-category-js" href="{% url "tag_index" slug=tag.slug %}">{{ tag }}</a>{% endfor %}
+	</p>
+    
     {{ object.body|markdown }}
+
+    <div class="post-content">
+    	{{ object.body_html|safe }}
+	</div>
+
   </div>
 {% endfor %}
 {% endblock %}
